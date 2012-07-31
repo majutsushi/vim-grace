@@ -81,6 +81,8 @@ syn match graceNumber "\(\<\d\+\.\d*\|\.\d\+\)\([eE][-+]\=\d\+\)\=[fFdD]\="
 syn match graceNumber "\<\d\+[eE][-+]\=\d\+[fFdD]\=\>"
 syn match graceNumber "\<\d\+\([eE][-+]\=\d\+\)\=[fFdD]\>"
 
+syn match gracePragma "^#pragma .*"
+
 syn sync fromstart
 
 " known errors
@@ -126,6 +128,7 @@ hi def link graceDefSpecializer Function
 hi def link graceClassName Special
 hi def link graceClassSpecializer Special
 hi def link graceInterpolationDelimiter Delimiter
+hi def link gracePragma PreProc
 
 let b:current_syntax = "grace"
 
