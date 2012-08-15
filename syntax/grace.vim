@@ -25,7 +25,7 @@ syn region graceClassParams start="(" end=")" contained contains=graceType
 syn region graceClassFold start="^\z(\s*\)\<class\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
 
 " most Grace keywords
-syn keyword graceKeyword object return var def
+syn keyword graceKeyword object return var def is
 syn match graceKeyword "->"
 syn match graceKeyword ":="
 
