@@ -11,7 +11,7 @@ syn case match
 syn sync minlines=5000
 
 " foldable blocks
-syn region graceMethodDef start="\s*\<method\>" end="{"he=e-1 contains=graceStatementMethod,graceType,graceKeyword
+syn region graceMethodDef start="\s*\<method\>" end="{" contains=graceStatementMethod,graceType,graceKeyword
 syn keyword graceStatementMethod method contained
 syn region graceMethodFold start="^\z(\s*\)\<method\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
 syn region graceTypeDef start="\s*\<type\>" end="{"he=e-1 contains=graceStatementType,graceKeyword
@@ -32,10 +32,9 @@ syn match graceKeyword ":="
 syn match graceOperator ":\{2,\}" "this is not a type
 
 
-" package and import statements
-syn keyword gracePackage package nextgroup=graceFqn skipwhite
-syn keyword graceImport import nextgroup=graceFqn skipwhite
-syn match graceFqn "\<[._$a-zA-Z0-9,]*" contained
+" import and dialect statements
+syn keyword graceDialect dialect nextgroup=graceString skipwhite
+syn region graceImport start="^import" end="as" contains=graceString
 
 " boolean literals
 syn keyword graceBoolean true false
@@ -100,6 +99,8 @@ hi def link graceError Error
 hi def link graceWSError Error
 hi def link graceBuiltinMethod Identifier
 hi def link graceKeyword Keyword
+hi def link graceImport Keyword
+hi def link graceDialect Keyword
 hi def link graceStatementMethod graceKeyword
 hi def link graceStatementType graceKeyword
 hi def link gracePackage Include
