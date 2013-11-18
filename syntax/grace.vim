@@ -14,9 +14,9 @@ syn sync minlines=5000
 syn region graceMethodDef start="\s*\<method\>" end="{" contains=graceStatementMethod,graceType,graceKeyword
 syn keyword graceStatementMethod method contained
 syn region graceMethodFold start="^\z(\s*\)\<method\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
-syn region graceTypeDef start="\s*\<type\>" end="{"he=e-1 contains=graceStatementType,graceKeyword
+syn region graceTypeDef start="\s*\<type\>" end="[{\n]"he=e-1 contains=graceStatementType,graceKeyword
 syn keyword graceStatementType type contained
-syn region graceTypeFold start="^\z(\s*\)\<type\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
+syn region graceTypeFold start="^\z(\s*\)\<type\>.*=\s*{[^}]*$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
 syn region graceClassDef start="\s*\<class\>" end="{"he=e-1 contains=graceClass,graceClassName,graceClassSpecializer,graceClassParams,graceType
 syn keyword graceClass class contained nextgroup=graceClassName
 syn match graceClassName "[^ =:;{}()\[]\+" contained nextgroup=graceClassSpecializer skipwhite
@@ -25,7 +25,7 @@ syn region graceClassParams start="(" end=")" contained contains=graceType
 syn region graceClassFold start="^\z(\s*\)\<class\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
 
 " most Grace keywords
-syn keyword graceKeyword object return var def is
+syn keyword graceKeyword object return var def is inherits
 syn match graceKeyword "->"
 syn match graceKeyword ":="
 
