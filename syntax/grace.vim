@@ -11,12 +11,12 @@ syn case match
 syn sync minlines=5000
 
 " foldable blocks
-syn region graceMethodDef start="\s*\<method\>" end="{"he=e-1 contains=graceStatementMethod,graceType,graceKeyword
+syn region graceMethodDef start="\s*\<method\>" end="{" contains=graceStatementMethod,graceType,graceKeyword
 syn keyword graceStatementMethod method contained
 syn region graceMethodFold start="^\z(\s*\)\<method\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
-syn region graceTypeDef start="\s*\<type\>" end="{"he=e-1 contains=graceStatementType,graceKeyword
+syn region graceTypeDef start="\s*\<type\>" end="[{\n]"he=e-1 contains=graceStatementType,graceKeyword
 syn keyword graceStatementType type contained
-syn region graceTypeFold start="^\z(\s*\)\<type\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
+syn region graceTypeFold start="^\z(\s*\)\<type\>.*=\s*{[^}]*$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
 syn region graceClassDef start="\s*\<class\>" end="{"he=e-1 contains=graceClass,graceClassName,graceClassSpecializer,graceClassParams,graceType
 syn keyword graceClass class contained nextgroup=graceClassName
 syn match graceClassName "[^ =:;{}()\[]\+" contained nextgroup=graceClassSpecializer skipwhite
@@ -24,18 +24,24 @@ syn region graceClassSpecializer start="\[" end="\]" contained contains=graceCla
 syn region graceClassParams start="(" end=")" contained contains=graceType
 syn region graceClassFold start="^\z(\s*\)\<class\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
 
+syn region graceConstructorDef start="\s*\<constructor\>" end="{"he=e-1 contains=graceConstructor,graceConstructorName,graceConstructorSpecializer,graceConstructorParams,graceType
+syn keyword graceConstructor constructor contained nextgroup=graceConstructorName
+syn match graceConstructorName "[^ =:;{}()\[]\+" contained nextgroup=graceConstructorSpecializer skipwhite
+syn region graceConstructorSpecializer start="<" end=">" contained contains=graceConstructorSpecializer nextgroup=GraceConstructorParams
+syn region graceConstructorParams start="(" end=")" contained contains=graceType
+syn region graceConstructorFold start="^\z(\s*\)\<constructor\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
+
 " most Grace keywords
-syn keyword graceKeyword object return var def is
+syn keyword graceKeyword object return var def is inherits
 syn match graceKeyword "->"
 syn match graceKeyword ":="
 
 syn match graceOperator ":\{2,\}" "this is not a type
 
 
-" package and import statements
-syn keyword gracePackage package nextgroup=graceFqn skipwhite
-syn keyword graceImport import nextgroup=graceFqn skipwhite
-syn match graceFqn "\<[._$a-zA-Z0-9,]*" contained
+" import and dialect statements
+syn keyword graceDialect dialect nextgroup=graceString skipwhite
+syn region graceImport start="^import" end="as" contains=graceString
 
 " boolean literals
 syn keyword graceBoolean true false
@@ -100,6 +106,8 @@ hi def link graceError Error
 hi def link graceWSError Error
 hi def link graceBuiltinMethod Identifier
 hi def link graceKeyword Keyword
+hi def link graceImport Keyword
+hi def link graceDialect Keyword
 hi def link graceStatementMethod graceKeyword
 hi def link graceStatementType graceKeyword
 hi def link gracePackage Include
@@ -127,6 +135,9 @@ hi def link graceDefName Function
 hi def link graceDefSpecializer Function
 hi def link graceClassName Special
 hi def link graceClassSpecializer Special
+hi def link graceConstructor Keyword
+hi def link graceConstructorName Special
+hi def link graceConstructorSpecializer Special
 hi def link graceInterpolationDelimiter Delimiter
 hi def link gracePragma PreProc
 
