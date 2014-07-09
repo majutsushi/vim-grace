@@ -24,6 +24,13 @@ syn region graceClassSpecializer start="\[" end="\]" contained contains=graceCla
 syn region graceClassParams start="(" end=")" contained contains=graceType
 syn region graceClassFold start="^\z(\s*\)\<class\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
 
+syn region graceConstructorDef start="\s*\<constructor\>" end="{"he=e-1 contains=graceConstructor,graceConstructorName,graceConstructorSpecializer,graceConstructorParams,graceType
+syn keyword graceConstructor constructor contained nextgroup=graceConstructorName
+syn match graceConstructorName "[^ =:;{}()\[]\+" contained nextgroup=graceConstructorSpecializer skipwhite
+syn region graceConstructorSpecializer start="<" end=">" contained contains=graceConstructorSpecializer nextgroup=GraceConstructorParams
+syn region graceConstructorParams start="(" end=")" contained contains=graceType
+syn region graceConstructorFold start="^\z(\s*\)\<constructor\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
+
 " most Grace keywords
 syn keyword graceKeyword object return var def is inherits
 syn match graceKeyword "->"
@@ -128,6 +135,9 @@ hi def link graceDefName Function
 hi def link graceDefSpecializer Function
 hi def link graceClassName Special
 hi def link graceClassSpecializer Special
+hi def link graceConstructor Keyword
+hi def link graceConstructorName Special
+hi def link graceConstructorSpecializer Special
 hi def link graceInterpolationDelimiter Delimiter
 hi def link gracePragma PreProc
 
